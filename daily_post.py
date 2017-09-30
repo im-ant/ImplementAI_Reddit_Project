@@ -35,17 +35,17 @@ def reformat(file_in, name_symb):
 
             ## extract from the post: Title | Subreddits | Total votes |  Scores | #comments
             try:
-                title_, = post["title"]
+                title_ = post["title"]
             except KeyError:
                 print(" No title!")
-                title = ""
+                title_ = ""
             try:
-                subr_, = post["subreddit"]
+                subr_ = post["subreddit"]
             except KeyError:
                 print(" No subreddit!")
                 subr_ = ""
             try:
-                score_,=post["score"]
+                score_=post["score"]
             except KeyError:
                 print("No score")
                 score_ = 0
@@ -54,7 +54,7 @@ def reformat(file_in, name_symb):
             except KeyError:
                 print("No number of comments!")
                 n_comment_ = 0
-                
+            info = [title_, subr_,score_,n_comment_]
             if not comp_post_daily.get(comp):
                 comp_post_daily[comp]= {}
                 comp_post_daily[comp][day_] = info
