@@ -8,7 +8,7 @@ import sys
 fp = sys.argv[1] # input file path
 fout = sys.argv[2] #output file path
 
-df = pd.read_csv('constituents.csv')
+df = pd.read_csv('/data/ImplementReddit/companies/constituents.csv')
 symb_name = {}
 for line in df[['Symbol', 'Name']].values:
     name = line[1].lower()
