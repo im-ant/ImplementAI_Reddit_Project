@@ -67,7 +67,7 @@ def reformat(file_in, name_symb):
                     subred += " "+subr_
                     score += score_
                     n_comment += n_comment_
-                    new_info = [title, subred,  score, n_comments]
+                    new_info = [title, subred,  score, n_comment]
                     comp_post_daily[comp][day_] = new_info
 
     print("Processed %s companies in file"%len(comp_post_daily), file_in)
