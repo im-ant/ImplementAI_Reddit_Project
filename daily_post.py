@@ -34,7 +34,27 @@ def reformat(file_in, name_symb):
             day_ = d.split(",")[0]
 
             ## extract from the post: Title | Subreddits | Total votes |  Scores | #comments
-            info = [post["title"], post["subreddit"],post["score"], post["num_comments"]]
+            try:
+                title_, = post["title"]
+            except KeyError:
+                print(" No title!")
+                title = ""
+            try:
+                subr_, = post["subreddit"]
+            except KeyError:
+                print(" No subreddit!")
+                subr_ = ""
+            try:
+                score_,=post["score"]
+            except KeyError:
+                print("No score")
+                score_ = 0
+            try:
+                 n_comment_ =  post["num_comments"]
+            except KeyError:
+                print("No number of comments!")
+                n_comment_ = 0
+                
             if not comp_post_daily.get(comp):
                 comp_post_daily[comp]= {}
                 comp_post_daily[comp][day_] = info
@@ -42,11 +62,11 @@ def reformat(file_in, name_symb):
                 if not comp_post_daily[comp].get(day_):
                     comp_post_daily[comp][day_] = info
                 else:
-                    title, subred, down, up = comp_post_daily[comp][day_]
-                    title += " "+info[0]
-                    subred += " "+info[1]
-                    down += info[2]
-                    up += info[3]
+                    title, subred, score, n_comment = comp_post_daily[comp][day_]
+                    title += " "+title_
+                    subred += " "+subr_
+                    score += score_
+                    n_comment += n_comment_
                     new_info = [title, subred, down, up]
                     comp_post_daily[comp][day_] = new_info
 
