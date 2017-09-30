@@ -33,8 +33,8 @@ def reformat(file_in, name_symb):
             d = datetime.datetime.utcfromtimestamp(float(t)).strftime('%Y-%m-%d,%H:%M:%SZ') # formatted date-time
             day_ = d.split(",")[0]
 
-            ## extract from the post: Title | Subreddits | Total votes |  Downvotes | Upvotes
-            info = [post["title"], post["subreddit"],-post["downs"], post["score"] + post["downs"]]
+            ## extract from the post: Title | Subreddits | Total votes |  Scores | #comments
+            info = [post["title"], post["subreddit"],post["score"], post["num_comments"]]
             if not comp_post_daily.get(comp):
                 comp_post_daily[comp]= {}
                 comp_post_daily[comp][day_] = info
@@ -57,7 +57,7 @@ def to_csv(data, out_file = None):
     dfs = []
     for company, daily_posts in data.items():
         df_ = df.from_dict(daily_posts,orient = 'index')
-        df_.columns = ["title","subreddit","downvotes","upvotes"]
+        df_.columns = ["title","subreddit","scores","num_comments"]
         df_["company"] = [company]*len(daily_posts)
         df_["date"] = df_.index
         dfs.append(df_)
