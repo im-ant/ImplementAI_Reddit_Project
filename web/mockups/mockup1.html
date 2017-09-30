@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<script type="text/javascript" src="../js/Chart.bundle.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row">
+	    <div class="col">
+			<h1>Hello, world!</h1>
+		</div>
+	</div>
+	    	<form role ="form" id="companyForm">
+	<div class="row">
+	    <div class="col">
+	    		<select id="companySelect" style="width: 100%" multiple>
+	    			<option value="MSFT">Microsoft</option>
+	    			<option value="MMM">3M</option>
+	    		</select>
+	    </div>
+	    <div class="col">
+			<canvas width="100px" height="100px" id=chartCanvas></canvas>
+	    </div>
+	</div>
+	    	</form>
+</div>
+	<script type="text/javascript">
+		companyDataDict = {
+			"MSFT" : [4, 6, 3],
+			"MMM": [2, 4, 5]
+		}
+		canv = document.getElementById("chartCanvas");
+		chartData = {};
+		chartData.labels = ["Label 1", "Label 2", "Label 3"];
+		dataset1 = {};
+		dataset1.label = "Test Dataset";
+		dataset1.data = [];
+		dataset1.fill = false;
+		dataset1.borderColor = "rgb(0, 80, 60)";
+		dataset1.lineTension = 0.1;
+		chartData.datasets = [dataset1];
+		chartOptions = 
+			{
+			scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:false
+	                }
+	            }]
+	        }
+	    };	
+		chart = new Chart(canv, 
+		{
+			type: 'line',
+			data: chartData,
+			options: chartOptions
+		});
+
+
+	</script>
+	<script type="text/javascript" src="../js/jquery-3.2.1.slim.min.js"></script>
+	<script type="text/javascript" src="../js/popper.min.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$( "#companySelect" )
+  .change(function () {
+  	//alert("change!");
+    selectedOption = $( "#companySelect option:selected" ).first();
+    selectedValue = selectedOption.attr("value");
+	//alert("selected: " + selectedValue);
+  	dataset1.data = companyDataDict[selectedValue];
+    
+    chart.update();
+  });
+	</script>
+</body>
+</html>
