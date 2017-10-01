@@ -3,13 +3,21 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="static/css/bootstrap.min.css">
+<link rel="stylesheet" href="static/css/font-awesome.min.css">
 <script type="text/javascript" src="static/js/Chart.bundle.js"></script>
+<script type="text/javascript" src="static/js/jquery-3.2.1.slim.min.js"></script>
+<script type="text/javascript" src="static/js/popper.min.js"></script>
+<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="static/js/resampler.js"></script>
+<script type="text/javascript" src="static/js/speex.js"></script>
+<script type="text/javascript" src="static/js/nuance.js"></script>
 <script type="text/javascript">
 	var elem = document.createElement('textarea');
 	elem.innerHTML = "{{companyDictStr}}";
 	var decoded = elem.value;
 	categoryDict = JSON.parse(decoded);
-	optionHTMLDict = {}
+	optionHTMLDict = {};
+	reverseCategoryDict = {};
 	for(var key in categoryDict)
 	{
 		if(categoryDict.hasOwnProperty(key))
@@ -21,6 +29,7 @@
 			{
 				var pair = categoryList[i];
 				optionHTMLDict[key] += "<option value='" + pair[0] + "'>" + pair[1] + "</option>";
+				reverseCategoryDict[pair[0]] = key;
 			}
 		}
 	}
@@ -30,7 +39,7 @@
 <div class="container-fluid">
 	<div class="row">
 	    <div class="col">
-			<h3>Stock Price Predictor</h3>
+			<h3>Stock Price Predictor <button id="recordButton"><i class="fa fa-microphone"></i></button></h3>
 		</div>
 	</div>
 	    	<form role ="form" id="companyForm">
@@ -87,9 +96,6 @@
 
 
 	</script>
-	<script type="text/javascript" src="static/js/jquery-3.2.1.slim.min.js"></script>
-	<script type="text/javascript" src="static/js/popper.min.js"></script>
-	<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		$( "#categorySelect" )
   .change(function () {
@@ -110,5 +116,7 @@
     chart.update();
   });
 	</script>
+<script type="text/javascript" src="static/js/nlu-configuration.js"></script>
+<script type="text/javascript" src="static/js/nlu-stuff.js"></script>
 </body>
 </html>
