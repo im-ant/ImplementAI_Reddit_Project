@@ -20,7 +20,7 @@ if __name__ == '__main__':
         'reg_alpha': [0, 0.001],
         'reg_lambda': [0, 0.0001]
     }
-    gsearch1 = GridSearchCV(estimator = LGBMClassifier(), param_grid = param_search, scoring='roc_auc',n_jobs=-1, cv=5, verbose=10)
+    gsearch1 = GridSearchCV(estimator = LGBMClassifier(), param_grid = param_search, scoring='accuracy',n_jobs=-1, cv=5, verbose=10)
     gsearch1.fit(train.values,target.values)
 
     print(gsearch1.best_params_, gsearch1.best_score_)
@@ -35,5 +35,5 @@ if __name__ == '__main__':
         'objective': ['binary:logistic']
     }
     model = XGBClassifier()
-    gsearch1 = GridSearchCV(estimator = XGBClassifier(), param_grid = param_test1, scoring='roc_auc',n_jobs=-1, cv=5, verbose=10)
+    gsearch1 = GridSearchCV(estimator = XGBClassifier(), param_grid = param_test1, scoring='accuracy',n_jobs=-1, cv=5, verbose=10)
     gsearch1.fit(train,target)
