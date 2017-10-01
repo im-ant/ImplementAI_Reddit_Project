@@ -22,6 +22,7 @@ def load_constituents():
     global companyDictStr
     companyDictStr = json.dumps(companyDict)
     print(companyDictStr)
+    categoryNames.sort()
     pass
 
 @app.route('/')
