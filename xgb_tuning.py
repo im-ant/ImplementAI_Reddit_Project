@@ -1,5 +1,6 @@
 import pandas as pd
 from xgboost import XGBClassifier
+from lightgbm import LGBMClassifier
 from sklearn.model_selection import GridSearchCV   #Perforing grid search
 
 if __name__ == '__main__':
@@ -9,17 +10,30 @@ if __name__ == '__main__':
     train.dropna(inplace=True)
     vals = train['company'].values
     train['company'], id = pd.factorize(vals)
-    target = train['target']
+    target = (train['target'] > 0).astype(int)
     train.drop('target', axis=1, inplace=True)
+
+    param_search = {
+        'num_leaves':[25, 50, 100, 250],
+        'n_estimators':[100],
+        'max_bin':[5000],
+        'reg_alpha': [0, 0.001],
+        'reg_lambda': [0, 0.0001]
+    }
+    gsearch1 = GridSearchCV(estimator = LGBMClassifier(), param_grid = param_search, scoring='roc_auc',n_jobs=-1, cv=5, verbose=10)
+    gsearch1.fit(train.values,target.values)
+
+    print(gsearch1.best_params_, gsearch1.best_score_)
+
+
     param_test1 = {
         'max_depth':[3, 5, 7],
         'min_child_weight':[3, 5, 7],
-        'gamma': [i / 10.0 for i in range(0, 5)],
-        'subsample':[i / 10.0 for i in range(6, 10)],
-        'colsample_bytree':[i / 10.0 for i in range(6, 10)],
+        'gamma': [i / 10.0 for i in range(0, 5, 2)],
+        'subsample':[i / 10.0 for i in range(5, 10, 2)],
+        'colsample_bytree':[i / 10.0 for i in range(5, 10, 2)],
         'objective': ['binary:logistic']
     }
     model = XGBClassifier()
     gsearch1 = GridSearchCV(estimator = XGBClassifier(), param_grid = param_test1, scoring='roc_auc',n_jobs=-1, cv=5, verbose=10)
     gsearch1.fit(train,target)
-    print(gsearch1.best_params_, gsearch1.best_score_)
