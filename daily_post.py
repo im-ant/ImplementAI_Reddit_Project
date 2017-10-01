@@ -9,6 +9,16 @@ import pandas as pd
 from pandas import DataFrame as df
 
 
+prices = pd.read_csv("../dataset/stock_price_data.csv")
+
+def prev_fluc(company_tick,date):
+    """Given company tick name and date, return fluctuation of last date"""
+    price = prices[[date,company_tick]]
+    index = price.index[price['date']==date][0]
+    cur_price = price.loc[index-2][company_tick]
+    prev_price = price.loc[index-1][company_tick]
+    return (cur_price - prev_price)/prev_price
+
 def tick2name():
     df = pd.read_csv('/data/ImplementReddit/companies/constituents.csv')
     symb_name = {}
@@ -24,6 +34,7 @@ def reformat(file_in, name_symb):
     return: {company_name: {date1: extraction, date2:extraction}, ...}
     """
     data = json.load(open(fin)) 
+    
     comp_post_daily = {} # {company_name: {date1:[post],date2:[post]},...}
     for comp,posts in data.items():
         # print("Company name %s, number of posts: %s"%(comp, len(posts)))
@@ -54,7 +65,10 @@ def reformat(file_in, name_symb):
             except KeyError:
                 print("No number of comments!")
                 n_comment_ = 0
-            info = [title_, subr_,score_,n_comment_]
+            
+            last_fluc_ = prev_fluc(day_, comp)
+
+            info = [title_, subr_,score_,n_comment_, last_fluc_]
             if not comp_post_daily.get(comp):
                 comp_post_daily[comp]= {}
                 comp_post_daily[comp][day_] = info
@@ -67,7 +81,7 @@ def reformat(file_in, name_symb):
                     subred += " "+subr_
                     score += score_
                     n_comment += n_comment_
-                    new_info = [title, subred,  score, n_comment]
+                    new_info = [title, subred,  score, n_comment, last_fluc_]
                     comp_post_daily[comp][day_] = new_info
 
     print("Processed %s companies in file"%len(comp_post_daily), file_in)
@@ -77,7 +91,7 @@ def to_csv(data, out_file = None):
     dfs = []
     for company, daily_posts in data.items():
         df_ = df.from_dict(daily_posts,orient = 'index')
-        df_.columns = ["title","subreddit","scores","num_comments"]
+        df_.columns = ["title","subreddit","scores","num_comments","yesterday_fluctuation"]
         df_["company"] = [company]*len(daily_posts)
         df_["date"] = df_.index
         dfs.append(df_)
@@ -85,6 +99,7 @@ def to_csv(data, out_file = None):
     out = pd.concat(dfs)
     if out_file:
         out.to_csv(out_file)
+    print("Generated a csv of %s rows"%(len(out.index)))
     return out
     
 
