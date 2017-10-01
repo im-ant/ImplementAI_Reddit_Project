@@ -20,8 +20,8 @@ if __name__ == '__main__':
     df['company'], id = pd.factorize(val)
 
     df['date'] = pd.to_datetime(df['date'])
-    train = df[df['date'] < datetime.datetime(year=2017, month=4, day=1)]
-    test = df[df['date'] >= datetime.datetime(year=2017, month=4, day=1)]
+    train = df[df['date'] < datetime.datetime(year=2017, month=4, day=15)]
+    test = df[df['date'] >= datetime.datetime(year=2017, month=4, day=15)]
 
     test = test.sort_values('date')
     test.reset_index(drop=True, inplace=True)
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     train = train.sample(frac=1)
     train.drop('date', axis=1, inplace=True)
     train.dropna(inplace=True)
-    #train.drop('company', axis=1, inplace=True)
+    # train.drop('company', axis=1, inplace=True)
     train_y = (train['target'] > 0).astype(int)
     train_X = train.drop('target', axis=1)
 
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     test = test.sample(frac=1)
     test.drop('date', axis=1, inplace=True)
     test.dropna(inplace=True)
-    #test.drop('company', axis=1, inplace=True)
+    # test.drop('company', axis=1, inplace=True)
     test_y = (test['target'] > 0).astype(int)
     test_X = test.drop('target', axis=1)
 
@@ -92,17 +92,18 @@ if __name__ == '__main__':
     # print(accuracy_score(boosted, test_y.values))
 
 
-    # this is a backtesting script
-    def exponential_average(old, new, beta=0.9):
-        return old * beta + (1-beta) * new
-
+    # # this is a backtesting script
+    # def exponential_average(old, new, beta=0.9):
+    #     return old * beta + (1-beta) * new
+    #
     backtest_values = []
     last_value = 100000
+
     for i in range(len(pred_cat)):
         if pred_cat[i] == 1:
-            last_value += (last_value * backtesting_df[i])/ (len(pred_cat)/60)
+            last_value += (100000 * backtesting_df[i])
         else:
-            last_value -= (last_value * backtesting_df[i])/ (len(pred_cat)/60)
+            last_value -= (100000 * backtesting_df[i])
 
         backtest_values.append(last_value)
 
