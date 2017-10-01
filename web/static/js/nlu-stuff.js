@@ -65,6 +65,11 @@ var defaultOptions = {
                 			$( "#categorySelect" ).val(reverseCategoryDict[symbol]).change();
                 			$( "#companySelect" ).val(symbol).change();
                 		}
+                		else if(symbol == "NUAN")
+                		{
+                			setTimeout(function(){tts("Nuance is not a Fortune 500 company");}, 500);
+                			console.log("Nuance is not a Fortune 500 company");
+                		}
                 	}
                 }catch(ex){
                     //dLog(JSON.stringify(msg, null, 2), $asrDebug, true);
@@ -145,11 +150,11 @@ recordButton.on('click', asr);
 
 // TTS
 
-function tts(evt){
+function tts(textToSay){
     var options = createOptions({
         language: ASR_LANGUAGE,
         voice: TTS_VOICE,
-        text: $ttsText.val()
+        text: textToSay
     });
     //$ttsGo.prop('disabled', true);
     Nuance.playTTS(options);
