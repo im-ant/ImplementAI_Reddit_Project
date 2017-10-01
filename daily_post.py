@@ -7,17 +7,8 @@ import sys
 import re
 import pandas as pd
 from pandas import DataFrame as df
+# from new_feat import prev_fluc
 
-
-prices = pd.read_csv("dataset/stock_price_data.csv")
-
-def prev_fluc(company_tick,date):
-    """Given company tick name and date, return fluctuation of last date"""
-    price = prices[[date,company_tick]]
-    index = price.index[price['date']==date][0]
-    cur_price = price.loc[index-2][company_tick]
-    prev_price = price.loc[index-1][company_tick]
-    return (cur_price - prev_price)/prev_price
 
 def tick2name():
     df = pd.read_csv('/data/ImplementReddit/companies/constituents.csv')
@@ -66,9 +57,9 @@ def reformat(file_in, name_symb):
                 print("No number of comments!")
                 n_comment_ = 0
             
-            last_fluc_ = prev_fluc(day_, comp)
-
-            info = [title_, subr_,score_,n_comment_, last_fluc_]
+            # last_fluc_ = prev_fluc(day_, comp)
+            info = [title_, subr_,score_,n_comment_,]
+            # info = [title_, subr_,score_,n_comment_, last_fluc_]
             if not comp_post_daily.get(comp):
                 comp_post_daily[comp]= {}
                 comp_post_daily[comp][day_] = info
@@ -81,7 +72,7 @@ def reformat(file_in, name_symb):
                     subred += " "+subr_
                     score += score_
                     n_comment += n_comment_
-                    new_info = [title, subred,  score, n_comment, last_fluc_]
+                    new_info = [title, subred,  score, n_comment]
                     comp_post_daily[comp][day_] = new_info
 
     print("Processed %s companies in file"%len(comp_post_daily), file_in)
@@ -104,7 +95,7 @@ def to_csv(data, out_file = None):
     
 
 if __name__=="__main__":
-    # fin = "datas/post.json"
+   
     fin = sys.argv[1]
     fout = sys.argv[2]
     name_symb = tick2name()
