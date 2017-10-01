@@ -9,7 +9,7 @@ import pandas as pd
 from pandas import DataFrame as df
 
 
-prices = pd.read_csv("../dataset/stock_price_data.csv")
+prices = pd.read_csv("dataset/stock_price_data.csv")
 
 def prev_fluc(company_tick,date):
     """Given company tick name and date, return fluctuation of last date"""
