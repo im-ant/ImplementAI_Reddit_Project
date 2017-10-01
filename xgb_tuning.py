@@ -23,7 +23,7 @@ if __name__ == '__main__':
         'reg_alpha': [0, 0.001],
         'reg_lambda': [0, 0.0001]
     }
-    gsearch1 = GridSearchCV(estimator = LGBMClassifier(), param_grid = param_search, scoring='accuracy',n_jobs=-1, cv=5, verbose=1)
+    gsearch1 = GridSearchCV(estimator = LGBMClassifier(), param_grid = param_search, scoring='accuracy',n_jobs=-1, cv=5, verbose=5)
     gsearch1.fit(train.values,target.values)
     print('=============================================')
     print('=============================================')
