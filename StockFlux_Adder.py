@@ -4,7 +4,7 @@ import sys, csv
 import pandas as pd
 import numpy as np
 
-STOCK_PRICE_DATA = "/data/ImplementReddit/training_test/stock_price_data.csv"
+STOCK_PRICE_DATA = "/data/ImplementReddit/dataset/stock_price_data.csv"
 UNLABELLED_DATA = sys.argv[1]
 OUTPUT_DATA = sys.argv[2]
 
