@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
 
     param_test1 = {
-        'max_depth':[3, 5, 7],
+        'max_depth':[3, 4, 5, 6, 7],
         'min_child_weight':[3, 5, 7],
         'gamma': [i / 10.0 for i in range(0, 5, 2)],
         'subsample':[i / 10.0 for i in range(5, 10, 2)],
