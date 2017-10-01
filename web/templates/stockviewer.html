@@ -99,6 +99,8 @@
   	//alert("change!");
     var selectedOption = $( "#companySelect option:selected" ).first();
     var selectedValue = selectedOption.attr("value");
+    var selectedText = selectedOption.text();
+    dataset1.label = selectedText;
 	//alert("selected: " + selectedValue);
   	dataset1.data = companyDataDict[selectedValue];
     
