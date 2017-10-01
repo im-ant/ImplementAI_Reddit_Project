@@ -5,7 +5,7 @@ from sklearn.model_selection import GridSearchCV   #Perforing grid search
 import numpy as np
 
 if __name__ == '__main__':
-    train = pd.read_csv('dataset/train_modified.csv')
+    train = pd.read_csv('train_modified.csv')
     train.drop('Unnamed: 0', axis=1, inplace=True)
     train.drop('date', axis=1, inplace=True)
     train.dropna(inplace=True)
