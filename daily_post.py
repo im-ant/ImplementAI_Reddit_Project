@@ -82,7 +82,7 @@ def to_csv(data, out_file = None):
     dfs = []
     for company, daily_posts in data.items():
         df_ = df.from_dict(daily_posts,orient = 'index')
-        df_.columns = ["title","subreddit","scores","num_comments","yesterday_fluctuation"]
+        df_.columns = ["title","subreddit","scores","num_comments"]
         df_["company"] = [company]*len(daily_posts)
         df_["date"] = df_.index
         dfs.append(df_)
