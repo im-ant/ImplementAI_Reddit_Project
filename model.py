@@ -16,8 +16,8 @@ if __name__ == '__main__':
 
     df = pd.read_csv(file_name)
     df.drop('Unnamed: 0', axis=1, inplace=True)
-    val = df['company']
-    df['company'], id = pd.factorize(val)
+    # val = df['company']
+    # df['company'], id = pd.factorize(val)
 
     df['date'] = pd.to_datetime(df['date'])
     train = df[df['date'] < datetime.datetime(year=2017, month=4, day=15)]
@@ -26,13 +26,16 @@ if __name__ == '__main__':
     test = test.sort_values('date')
     test.reset_index(drop=True, inplace=True)
 
+    test.dropna(inplace=True)
+    presentation_df = test[['date', 'target', 'company']]
+
     backtesting_df = test['target'].values
     # print(len(train), len(test))
 
     train = train.sample(frac=1)
     train.drop('date', axis=1, inplace=True)
     train.dropna(inplace=True)
-    # train.drop('company', axis=1, inplace=True)
+    train.drop('company', axis=1, inplace=True)
     train_y = (train['target'] > 0).astype(int)
     train_X = train.drop('target', axis=1)
 
@@ -40,7 +43,7 @@ if __name__ == '__main__':
     test = test.sample(frac=1)
     test.drop('date', axis=1, inplace=True)
     test.dropna(inplace=True)
-    # test.drop('company', axis=1, inplace=True)
+    test.drop('company', axis=1, inplace=True)
     test_y = (test['target'] > 0).astype(int)
     test_X = test.drop('target', axis=1)
 
@@ -98,12 +101,16 @@ if __name__ == '__main__':
     #
     backtest_values = []
     last_value = 100000
+    print(len(pred_cat), len(presentation_df))
+    presentation_df['prediction'] = pred_cat
+    print(presentation_df.head())
+    presentation_df.to_csv('company_prediction.csv', index=False)
 
     for i in range(len(pred_cat)):
         if pred_cat[i] == 1:
-            last_value += (100000 * backtesting_df[i])
+            last_value += (100000 * backtesting_df[i]) / 10
         else:
-            last_value -= (100000 * backtesting_df[i])
+            last_value -= (100000 * backtesting_df[i]) / 10
 
         backtest_values.append(last_value)
 
