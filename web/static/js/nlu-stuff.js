@@ -80,9 +80,19 @@ var defaultOptions = {
 	                		}
                 		}
                 	}
+                	else
+                	{
+                		
+        			var msg = "Could you please repeat that?";
+        			setTimeout(function(){tts(msg);}, 500);
+        			console.log(msg);
+                	}
                 }catch(ex){
                     //dLog(JSON.stringify(msg, null, 2), $asrDebug, true);
-                    alert("exception:\n" + JSON.stringify(msg, null, 2));
+                    //alert("exception:\n" + JSON.stringify(msg, null, 2));
+        			var msg = "Could you please repeat that?";
+        			setTimeout(function(){tts(msg);}, 500);
+        			console.log(msg);
                 }
             } else {
                 //dLog(JSON.stringify(msg, null, 2), $asrDebug);
