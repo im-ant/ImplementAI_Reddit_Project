@@ -5,7 +5,7 @@ from sklearn.model_selection import GridSearchCV   #Perforing grid search
 
 train = pd.read_csv('train_modified.csv')
 target = (train['target'] > 0).astype(int)
-train.drop('targer', axis=1, inplace=True)
+train.drop('target', axis=1, inplace=True)
 
 param_test1 = {
     'max_depth':[3, 5, 7],
