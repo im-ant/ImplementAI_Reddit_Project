@@ -1,12 +1,13 @@
 
 #Import some stuff
-import csv
+import sys, csv
 import pandas as pd
 import numpy as np
 
 STOCK_PRICE_DATA = "/data/ImplementReddit/training_test/stock_price_data.csv"
-UNLABELLED_DATA ="/data/ImplementReddit/training_test/2017_1stQuarter_unlab_training_set.csv"
-OUTPUT_DATA="/data/ImplementReddit/training_test/train_modified.csv"
+UNLABELLED_DATA = sys.argv[1]
+OUTPUT_DATA = sys.argv[2]
+
 
 #Load the input csv file as a dataframe
 stock_df = pd.DataFrame.from_csv('/data/ImplementReddit/dataset/stock_price_data.csv')
