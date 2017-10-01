@@ -30,21 +30,24 @@
 <div class="container-fluid">
 	<div class="row">
 	    <div class="col">
-			<h1>Hello, world!</h1>
+			<h3>Stock Price Predictor</h3>
 		</div>
 	</div>
 	    	<form role ="form" id="companyForm">
 	<div class="row">
 	    <div class="col">
-	    		<select id="categorySelect" style="width: 80%;height:50%" multiple>
+	    	Category
+	    		<select id="categorySelect" style="width: 80%;height:40%" multiple>
 	    			{% for key in categoryNames %}
 	    			<option value="{{key}}">{{key}}</option>
 	    			 {% endfor %}
 	    		</select>
-	    		<select id="companySelect" style="width: 80%;height:50%" multiple>
+	    	<br>Company
+	    		<select id="companySelect" style="width: 80%;height:40%" multiple>
 	    		</select>
 	    </div>
 	    <div class="col">
+	    	
 			<canvas id=chartCanvas></canvas>
 	    </div>
 	</div>
