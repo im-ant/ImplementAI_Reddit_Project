@@ -3,7 +3,6 @@ from sklearn.decomposition import TruncatedSVD, LatentDirichletAllocation
 import pandas as pd
 
 df = pd.read_csv('features.csv', encoding='latin1')
-df.drop('Unnamed: 0', axis=1, inplace=True)
 # if no title for the day for a compagny, either we give it a 0 value, or we dont give it anything
 tmp_text = df['title']
 df.drop('title', axis=1, inplace=True)
