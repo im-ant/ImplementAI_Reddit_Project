@@ -60,15 +60,24 @@ var defaultOptions = {
 						concepts = concepts.concepts;
 
                 		var symbol = concepts.COMPANY[0].value;
-                		if(!!symbol && companyDataDict.hasOwnProperty(symbol))
+                		if(!!symbol)
                 		{
-                			$( "#categorySelect" ).val(reverseCategoryDict[symbol]).change();
-                			$( "#companySelect" ).val(symbol).change();
-                		}
-                		else if(symbol == "NUAN")
-                		{
-                			setTimeout(function(){tts("Nuance is not a Fortune 500 company");}, 500);
-                			console.log("Nuance is not a Fortune 500 company");
+	                		if(companyDataDict.hasOwnProperty(symbol))
+	                		{
+	                			$( "#categorySelect" ).val(reverseCategoryDict[symbol]).change();
+	                			$( "#companySelect" ).val(symbol).change();
+	                		}
+	                		else if(symbol == "NUAN")
+	                		{
+	                			setTimeout(function(){tts("Nuance is not a Fortune 500 company");}, 500);
+	                			console.log("Nuance is not a Fortune 500 company");
+	                		}
+	                		else
+	                		{
+	                			var msg = "We don't have data for " + concepts.COMPANY[0].literal;
+	                			setTimeout(function(){tts(msg);}, 500);
+	                			console.log(msg);
+	                		}
                 		}
                 	}
                 }catch(ex){
