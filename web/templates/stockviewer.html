@@ -16,6 +16,11 @@
 	elem.innerHTML = "{{companyDictStr}}";
 	var decoded = elem.value;
 	categoryDict = JSON.parse(decoded);
+	elem.innerHTML = "{{stockPriceDictStr}}";
+	decoded = elem.value;
+	console.log(decoded);
+	stockPriceDict = JSON.parse(decoded);
+	pastDateRange = stockPriceDict['date'];
 	optionHTMLDict = {};
 	reverseCategoryDict = {};
 	for(var key in categoryDict)
@@ -63,13 +68,14 @@
 	    	</form>
 </div>
 	<script type="text/javascript">
-		companyDataDict = {
+		/*companyDataDict = {
 			"MSFT" : [4, 6, 3],
 			"MMM": [2, 4, 5]
-		}
+		}*/
+		companyDataDict = stockPriceDict;
 		canv = document.getElementById("chartCanvas");
 		chartData = {};
-		chartData.labels = ["Label 1", "Label 2", "Label 3"];
+		chartData.labels = pastDateRange;
 		dataset1 = {};
 		dataset1.label = "";
 		dataset1.data = [];
