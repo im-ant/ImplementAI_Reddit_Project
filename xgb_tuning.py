@@ -4,7 +4,10 @@ from xgboost import XGBClassifier
 from sklearn.model_selection import GridSearchCV   #Perforing grid search
 
 train = pd.read_csv('train_modified.csv')
-target = (train['target'] > 0).astype(int)
+train.drop('Unnamed: 0', axis=1, inplace=True)
+train.drop('date', axis=1, inplace=True)
+
+index, train['company'] = pd.factorize(train['company'].values)
 train.drop('target', axis=1, inplace=True)
 
 param_test1 = {
