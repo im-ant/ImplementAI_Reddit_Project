@@ -4,6 +4,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="static/css/bootstrap.min.css">
 <link rel="stylesheet" href="static/css/font-awesome.min.css">
+<style>
+.pred-UP
+{
+	color: #33cc00;
+};
+.pred-DOWN
+{
+	color: #ff0000;
+};
+</style>
 <script type="text/javascript" src="static/js/Chart.bundle.js"></script>
 <script type="text/javascript" src="static/js/jquery-3.2.1.slim.min.js"></script>
 <script type="text/javascript" src="static/js/popper.min.js"></script>
@@ -18,8 +28,11 @@
 	categoryDict = JSON.parse(decoded);
 	elem.innerHTML = "{{stockPriceDictStr}}";
 	decoded = elem.value;
-	console.log(decoded);
+	//console.log(decoded);
 	stockPriceDict = JSON.parse(decoded);
+	elem.innerHTML = "{{predictionDictStr}}";
+	decoded = elem.value;
+	predictionDict = JSON.parse(decoded);
 	pastDateRange = stockPriceDict['date'];
 	optionHTMLDict = {};
 	reverseCategoryDict = {};
@@ -51,14 +64,15 @@
 	<div class="row">
 	    <div class="col">
 	    	Category
-	    		<select id="categorySelect" style="width: 80%;height:40%" multiple>
+	    		<select id="categorySelect" style="width: 80%;height:30%" multiple>
 	    			{% for key in categoryNames %}
 	    			<option value="{{key}}">{{key}}</option>
 	    			 {% endfor %}
 	    		</select>
 	    	<br>Company
-	    		<select id="companySelect" style="width: 80%;height:40%" multiple>
+	    		<select id="companySelect" style="width: 80%;height:30%" multiple>
 	    		</select>
+	    		<br>Prediction: <span id="predictionText"></span>
 	    </div>
 	    <div class="col">
 	    	
@@ -120,6 +134,10 @@
   	dataset1.data = companyDataDict[selectedValue];
     
     chart.update();
+
+    prediction = predictionDict[selectedValue][0];
+    predictionText = prediction > 0 ? "UP" : "DOWN";
+    $("#predictionText").html(predictionText).removeAttr("class").addClass("pred-" + predictionText);
   });
 	</script>
 <script type="text/javascript" src="static/js/nlu-configuration.js"></script>

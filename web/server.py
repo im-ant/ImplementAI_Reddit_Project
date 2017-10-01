@@ -11,6 +11,8 @@ companyDictStr = ""
 stockPriceDict = {}
 stockPriceDictStr = ""
 companySymbols = []
+predictionDict = {}
+predictionDictStr = ""
 
 def load_constituents():
     constituents_path = "../dataset/constituents.csv"
@@ -49,7 +51,7 @@ def load_stock_prices():
     filteredByDate = filteredByDate.dropna(axis=1, how='any')
     #if 'date' in filteredByDate.columns:
     #    print('date was there after dropping NaNs')
-    print(filteredByDate)
+    #print(filteredByDate)
 
     symbolsToRemove = []
     stockPriceDict['date'] = filteredByDate['date'].tolist()
@@ -62,16 +64,34 @@ def load_stock_prices():
     global stockPriceDictStr
     stockPriceDictStr = json.dumps(stockPriceDict)
 
-    print(stockPriceDictStr)
+    #print(stockPriceDictStr)
+    pass
+
+def load_predictions():
+    predictions_path = "../company_prediction.csv"
+    table = pd.read_csv(predictions_path)
+    gb = table.groupby('company')
+    groups = gb.groups
+
+    for key in groups.keys():
+        dict = gb["prediction"].get_group(key).tolist()
+        predictionDict[key] = dict
+
+
+    global predictionDictStr
+    predictionDictStr = json.dumps(predictionDict)
+
     pass
 
 @app.route('/')
 def index():
     #return flask.jsonify(companyDict)
     #companyDictStr = flask.jsonify(companyDict)
-    return render_template("stockviewer.html",companyDictStr = companyDictStr, categoryNames = categoryNames, stockPriceDictStr = stockPriceDictStr )
+    return render_template("stockviewer.html",companyDictStr = companyDictStr, categoryNames = categoryNames,
+                           stockPriceDictStr = stockPriceDictStr, predictionDictStr = predictionDictStr )
 
 if __name__ == '__main__':
     load_constituents()
     load_stock_prices()
+    load_predictions()
     app.run(host='0.0.0.0')
